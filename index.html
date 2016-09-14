@@ -1,0 +1,301 @@
+<html>
+<head>
+	<title>Pinciaus ir V Barsa!</title>
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Include jQuery Mobile stylesheets -->
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <!-- Include the jQuery library -->
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <!-- Include the jQuery Mobile library -->
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3.8&sensor=false&libraries=geometry"></script>
+	<script type="text/javascript">
+		
+$(window).load(function(){
+	// var start = new google.maps.LatLng(54.64165804946788, 24.921112060546875);
+	var start = new google.maps.LatLng(41.38648062613401 ,2.172545193115184);
+
+	var _poi = [ // .local, ..local for country, $commercial$, $$super commercial$$
+	{name: 'Placa del sol', lat: 41.4016273 , lng: 2.1563381999999365, Do: ['Saules aikstes grindinys, gerkit alu su studentais'] },
+	{name: 'sagrada familia barcelona', lat: 41.4044837 , lng: 2.175727800000004, Do: ['aplankykit baznycia'] },
+	{name: 'park guell', lat: 41.4144948 , lng: 2.1526945000000524, Do: ['suoliukas ant kalvos'] },
+	{name: 'placa de sant felip neri', lat: 41.3834509 , lng: 2.1750184999999647, Do: ['pasislepkit nuo minios pas Neri'] },
+	{name: 'barri de gracia', lat: 41.4035997 , lng: 2.1553129000000126, Do: ['issirinkit megstamesni barri bariuka']},
+	{name: 'el born barcelona', lat: 41.3847239 , lng: 2.182857600000034, Do: ['selfis su hipsteriu']},
+	{name: 'placa del rey barcelona', lat: 41.3840937 , lng: 2.177409500000067, Do: ['karaliskas kebabas']},
+	{name: 'tibidabo barcelona', lat: 41.4225 , lng: 2.118610999999987, Do: ['graziausias vieta i miesta paziureti']}/*,
+	{	name: 'Cuzco, Peru', lat: -13.525 , lng: -71.97222219999998, radius: 5000, adradius: 10000, 
+       	Do: ['.look at a special isle for entrails in San Pedro Market',
+	'.look at old buildings in Plaza de Armas, fend off street naggers',
+	'$get a massage, yes yes a legit massage just for 15S$',
+	'.visit great coffee shop at Plaza de San Francisco',
+	'..drink beer with old dudes, learn Sapo', '..play Sapo, drink beer with old dudes',
+	'..search for the best places to try cuy, alpaca, chica. and find some.',
+	'.jog. in high altitude. pass out around a corner',
+	'..take salsa class, or three.',
+	'..salsa with enthusiastic local!'], Learn: ['..Sapo'], Drink: ['..beer with old men']},
+	{name: 'Sacsayhuamán, Cusco, Peru', lat: -13.504651746094268, lng: -71.97967529296875 },
+	{name: 'Pisac, Peru', lat: -13.421750647501257 , lng: -71.85030447613525 },
+	{name: 'Ollantaytambo', lat: -13.258354437735562 , lng: -72.26378 },
+	{name: 'Urubamba', lat: -13.304228157532453, lng: -72.12133884429926, 
+	Do: ['.tour the agrotour of Chichubamba','..glimpse the traditional ways of Andean life since before the Incan Empire','hang out with kids at NGO'],
+        Sleep: ['.Niños del Arco Iris']	},
+	{name: 'Maras', lat: -13.3328, lng: -72.1564,
+        Do: ['.slip past the guard into Slineras, look at salt']	},
+	{name: 'Lima, Peru', lat: -12.0478158, lng: -77.06220280000002 },
+	{name: 'Machu Picchu', lat: -13.163721 , lng: -72.54594329999998 },
+	{name: 'Huanchaco', lat: -8.0813889 , lng: -79.1202778,
+       	Do: ['fish with fishermen, surf with surfermen']},
+	{name: 'Titicaca lake', lat: -15.75, lng: -69.4167 },
+	{name: 'Pumapunku ruins', lat: -16.56169, lng: -68.679931,
+        url: 'http://www.crystalinks.com/tiahuanaco.html' },
+	{name: 'Kuelap ruins', lat: -6.418056, lng: -77.923333 },
+	{name: 'Nazca', lat: -14.828889, lng: -74.943611 },
+	{name: 'Playa del Carmen', lat: 20.6295586 , lng: -87.07388509999998,
+	Do: ['$$fish with charter fisher$$','go to the beach','club the night with clubbers in a club','$$scuba the scuba out of a cenote$$', 
+	'drink with shaman at Xaman\'s place'] },
+	{name: 'Tulum', lat: 20.2119444 , lng: -87.46583329999999,
+	Do: ['deliver a hug','go to the beach'] },
+	{name: 'Bacalar', lat: 18.67796665916569 , lng: -88.38827472695311,
+	Do: ['fish with fishermen', 'canoe with canoemen','walk the jungle with a juggler','count colors in the water','talk all night with anthropologists']},
+	{name: 'Orange Walk', lat: 18.083422858206742 , lng: -88.56017071728513,
+	Do: ['..not buy guns on the street'], Sleep: ['at a firestation'] },
+	{name: 'Belize City', lat: 17.497713 , lng: -88.18665399999998,
+	Do: ['..hang out with captain and beers on a [fancy] boat', '..find God in a church or rock'] },
+	{name: 'Placencia, Belize', lat: 16.5138889 , lng: -88.3666667,
+        Do: ['.hang out with gringo, Key West style','$..boat the keys of Belize, snorkel some lobsters$'] },
+	{name: 'Punta Gorda Belize', lat: 16.098935 , lng: -88.8094906,
+	Do: ['$.[mission] [teleport] Cross border to Guatemala, Livingston$$', '$.[mission] [teleport] Cross border to Guatemala, Puerto Barrios$$', 
+	'.[mission] [teleport] Illegally cross border to Guatemala' ] }, // Border crossing complications? takes time. dest - semi-random?
+	{name: 'San Cristóbal de las Casas', lat: 16.7285626 , lng: -92.63202799999999,
+	Do: ['.Shoo the capitalistas with the Shoe rebels', '..go to a grim fandango', '..[music] play music with grim fandango',
+	'play [music instrument] with locals'] },
+	{name: 'Emiliano Zapata', lat: 16.397021555099307 , lng: -91.33807136362304,
+       	Do: ['fish with fishermen', '.Shoo the capitalist corporations with Shoe rebels']},*/
+
+	// {name: 'Trakai', lat: 54.63828040216145 , lng: 24.933857917785645, radius: 500 },
+	// {name: 'Vilnius', lat: 54.6871555 , lng: 25.279651400000034, radius: 5000 },
+	// {name: "Traku Castle", lat: 54.65214931839526, lng: 24.933364391326904 },
+	// {name: "Kibinai", lat: 54.65077443349354, lng: 24.924298524856567 },
+	// {name: "Hill of Crosses", lat: 56.01522755313218 , lng: 23.41582417488098 },
+	];
+
+	var POI = [];
+
+	function POIClass (name, lat, lng, latLng, marker, action) {
+		this.name = name;
+		this.Do = action;
+		this.lat = lat;
+		this.lng = lng;
+		this.latLng = (latLng) ? latLng : new google.maps.LatLng(lat, lng);
+		this.marker = marker;
+		this.visible = true;
+		this.asking = false; 
+		this.dontbother = false;
+		this.radius   = 200;
+		this.adradius = 400;
+	}
+
+	POIClass.prototype.bounce = function () {
+		if (!this.marker) {
+			this.marker = addMarker (this.latLng, this.name);
+		}
+		this.visible = true;
+		this.marker.setVisible(this.visible);
+		this.marker.setAnimation(google.maps.Animation.BOUNCE);
+		console.log("marker:", this.marker);
+	}
+	POIClass.prototype.nobounce = function () {
+		if (!this.marker) {
+			this.marker = addMarker (this.latLng, this.name);
+		}
+		this.marker.setVisible(this.visible);
+		this.marker.setAnimation(null);
+	}
+
+	POIClass.prototype.distract = function () {
+		// tell how much time/money will cost to get in, ask if you wanna visit.
+
+		// asking = this.asking; // attempt to save a pointer to flag for dialog functions to use
+		//dest = this;
+		ask(this);
+	}
+
+	function ask (poi) {
+		if (!poi.dontbother && !poi.asking) { 
+			console.log('ask if wanna visit..');
+			poi.asking = true;
+			$('#ask').html( poi.Do );
+			$('#ask').dialog("option", "buttons", { 
+			"close": function() { 
+				// newDest(poi); // TODO: doesn't seem to work with multiple POIs/dialogs
+				$(this).dialog("close"); 
+				poi.asking = false; 
+				// poi.nobounce();
+				}
+			} );
+			$('#ask').dialog('open');
+		} 
+	}
+
+	var obj = document.getElementById('map');
+	// var center = new google.maps.LatLng(-37.762004, 175.275595);
+	// Custom map stuff - treasure map.
+	var a = function (h, e, d) {
+            var g = h.y;
+            var c = h.x;
+            var f = 1 << e;
+            if (g < 0 || g >= f) {
+                return null
+            }
+            if (c < 0 || c >= f) {
+                c = (c % f + f) % f
+            }
+            return d({
+                x: c,
+                y: g
+            }, e)
+        };
+	
+	var b = {
+            getTileUrl: function (d, c) {
+                return a(d, c, function (f, e) {
+                    // return "http://khmdbs0.google.com/pm?v=8&src=app&x=" + f.x + "&y=" + f.y + "&z=" + e + "&s="
+		    return "http://tile.stamen.com/watercolor/" + e + "/" + f.x + "/" + f.y + ".jpg"
+                })
+            },
+            tileSize: new google.maps.Size(256, 256),
+            isPng: false,
+            maxZoom: 14,
+            minZoom: 0,
+            radius: 1738000,
+            name: "Treasure",
+            credit: "Google"
+	};
+	var mapOptions = {
+		backgroundColor: 'black', 
+		center: start, 
+		zoom: 13, 
+		mapTypeControlOptions: {
+		     mapTypeIds: [google.maps.MapTypeId.TERRAIN, "treasure", google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE]
+		},
+		mapTypeId: "treasure",
+		scaleControl: true 
+	}
+	$(document).on('pageshow', '#index',function(e,data){   
+         
+            $('#content').height(getRealContentHeight());
+             
+           // This is the minimum zoom level that we'll allow
+           var minZoomLevel = 12;
+ 
+           var map = new google.maps.Map(obj, mapOptions);          
+        });
+ 
+        function getRealContentHeight() {
+            var header = $.mobile.activePage.find("div[data-role='header']:visible");
+            var footer = $.mobile.activePage.find("div[data-role='footer']:visible");
+            var content = $.mobile.activePage.find("div[data-role='content']:visible:visible");
+            var viewport_height = $(window).height();
+ 
+            var content_height = viewport_height - header.outerHeight() - footer.outerHeight();
+            if((content.outerHeight() - header.outerHeight() - footer.outerHeight()) <= viewport_height) {
+                content_height -= (content.outerHeight() - content.height());
+            } 
+            return content_height;
+        }
+	
+	var map = new google.maps.Map(obj, mapOptions);
+        map.mapTypes.set("treasure", new google.maps.ImageMapType(b))
+	// Custom map stuff end.
+	
+	var geocoder = new google.maps.Geocoder(); 
+	var destination = null;
+	var litPOI = null;
+	var path = [start];
+	var historypath = [start];
+	var speed = 255*1000/3600;
+	var started = false;
+
+	function addInfo(m, poi)
+	{
+		console.log(poi);
+		if (! poi.Do) {return(false)};
+		var info = new google.maps.InfoWindow({content: poi.Do[0]});
+	}
+	function addMarker(e,name,info)
+	{
+		var m = new google.maps.Marker({map: map, position: e, draggable: false, title: name, icon: "http://maps.google.com/mapfiles/kml/pal5/icon23.png"});
+		console.log("addMarker lat:", m.position.lat(), ", lng:", m.position.lng());
+		// printLL(name, m.position);
+		google.maps.event.addListener(m, 'click', function(e){ // move marker, show latlng
+			printLL(info);
+		});
+		return(m);
+	}
+
+	function printLL(out)
+	{
+		$('#console').text( out );
+		$('#console').scrollTop( $('#console')[0].scrollHeight );
+		console.log ( out );
+	}
+
+	// init DATABASE ;)
+	function getDB (poi)
+	{
+		for (var i = 0; i < poi.length; i++ ) {
+			console.log("loading.. ", poi[i], poi[i].Do);
+			POI.push(new POIClass(poi[i].name, poi[i].lat, poi[i].lng, poi[i].Do) );
+			POI[i].latLng = new google.maps.LatLng (POI[i].lat, POI[i].lng);
+			POI[i].marker = addMarker( POI[i].latLng, poi[i].name, poi[i].Do[0] );
+			addInfo(POI[i].marker, POI[i]);
+			if (poi[i].radius) {POI[i].radius = poi[i].radius}
+			if (poi[i].adradius) {POI[i].adradius = poi[i].adradius}
+			// new google.maps.Circle({ map: map, center: POI[i].latLng, radius: POI[i].radius, strokeColor: 'brown', strokeOpacity: 0.2, clickable: false });
+			// new google.maps.Circle({ map: map, center: POI[i].latLng, radius: POI[i].adradius, strokeColor: 'yellow', strokeOpacity: 0.9, clickable: false });
+		}
+	}
+
+// MAIN ? //
+	/*google.maps.event.addListener(map, 'rightclick', function(e){ // insert new marker, show latlng, get info, updateDB
+	// if (wikitravel) URL given - extract usefull info (latlng) ?
+		addMarker(e.latLng,'');
+	});*/
+	getDB(_poi);
+	
+	
+});
+</script>
+    <style>
+        #content {
+            padding: 0;
+            position : absolute !important; 
+            top : 40px !important;  
+            right : 0; 
+            bottom : 40px !important;  
+            left : 0 !important;        
+        }
+    </style>  
+</head>
+
+<body>
+    <div data-role="page" id="index">
+        <div data-theme="a" data-role="header">
+            <h3>
+                Pinciaus ir Viktorijos Barsa!
+            </h3>
+        </div>
+ 
+        <div data-role="content" id="content">
+            <div id="map" style="height:100%"></div>
+        </div>
+ 
+        <div data-theme="a" data-role="footer" data-position="fixed">
+            <textarea name="addinfo" id="console" readonly></textarea>
+        </div>
+    </div> 
+
+</body>
+</html>
